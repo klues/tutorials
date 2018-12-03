@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import reactor.core.publisher.Flux;
 import reactor.util.function.Tuple2;
 
@@ -36,13 +37,14 @@ public class SeeDemoApplication {
     }
 
     @RestController
-    @RequestMapping("/stock/transaction")
+    @CrossOrigin
+	@RequestMapping("/stock/transaction")
     class StockTransactionController {
 
         @Autowired
         StockTransactionService stockTransactionService;
 
-        @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+        @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
         public Flux<StockTransaction> stockTransactionEvents(){
             return stockTransactionService.getStockTransactions();
         }
